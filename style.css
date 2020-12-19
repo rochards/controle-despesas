@@ -1,0 +1,152 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Andika New Basic', sans-serif;
+    /* border: 2px solid; */
+}
+
+body {
+    background-color: #f5f4f4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    padding: 8px;
+    margin-bottom: 30px;
+}
+
+.container {
+    width: 320px;
+}
+
+.container h1 {
+    padding-top: 0;
+    color: blue;
+}
+
+.container h4 {
+    text-transform: uppercase;
+    padding-bottom: 0;
+}
+
+
+.inc-exp-container {
+    background: white;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.vl {
+    border-left: 1px solid #bdbdbd;
+    height: 50px;
+}
+
+.inc-exp-container div {
+    margin: 0 10px;
+}
+
+.inc-exp-container div:first-child {
+    text-align: end;
+}
+
+.plus {
+    color: rgb(6, 189, 6);
+}
+
+.minus {
+    color: rgb(189, 49, 6);
+}
+
+.hl {
+    border-bottom: 1px solid #bdbdbd;
+    width: 100%;
+}
+
+h3 {
+    margin-top: 40px;
+}
+
+form {
+    margin-top: 25px;
+}
+
+.form-control {
+    margin-top: 10px;
+}
+
+.form-control label {
+    display: block;
+}
+
+.form-control input {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #dedede;
+    transition-duration: 0.4s;
+}
+
+.form-control input:focus {
+    outline-color: indigo;
+}
+
+.btn {
+    margin-top: 10px;
+    width: 100%;
+    background-color: indigo;
+    border: 2px solid indigo;
+    padding: 3px;
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 2px;
+}
+
+
+.btn:hover {
+    background-color: white;
+    color: indigo;
+}
+
+.container ul {
+    padding: 0;
+}
+
+.transactions li {
+    width: 100%;
+    background-color: white;
+    margin-top: 5px;
+    padding: 5px;
+    list-style-type: none;
+    border-right: 4px solid;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.transactions li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.transactions span {
+    color: black;
+}
+
+.delete-btn {
+    cursor: pointer;
+    background-color: #e74c3c;
+    border: 0;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.transactions li:hover .delete-btn {
+    opacity: 1;
+}
