@@ -23,10 +23,10 @@ const removeTransaction = ID => {
     updateLocalStorage()
 }
 
-const addTransactionIntoDOM = transaction => {
-    const operator = transaction.amount >= 0 ? '+' : '-'
-    const CSSClass = transaction.amount >= 0 ? 'plus' : 'minus'
-    const amountWithoutOperator = Math.abs(transaction.amount).toFixed(2)
+const addTransactionIntoDOM = ({ id, name, amount }) => {
+    const operator = amount >= 0 ? '+' : '-'
+    const CSSClass = amount >= 0 ? 'plus' : 'minus'
+    const amountWithoutOperator = Math.abs(amount).toFixed(2)
     /**
      * createElement -> metodo do document que podemos utilizar
      * para criar um novo elemento HTML
@@ -35,10 +35,10 @@ const addTransactionIntoDOM = transaction => {
 
     li.classList.add(CSSClass)
     li.innerHTML = `
-        <button class="delete-btn" onClick="removeTransaction(${ transaction.id })">
+        <button class="delete-btn" onClick="removeTransaction(${ id })">
             x
         </button>
-        <span>${ transaction.name }</span>${ operator } R$ ${ dotToComma(amountWithoutOperator) }
+        <span>${ name }</span>${ operator } R$ ${ dotToComma(amountWithoutOperator) }
     ` // inserindo um codigo html dentro de li
     
     /**
@@ -54,20 +54,22 @@ const dotToComma = value => {
     return valueToString.replace(/\./g, ',')
 }
 
+const sumAmounts = (accumulator, value) => accumulator + value
+
 const updateBalanceValues = () => {
     const transactionsAmounts = transactions
         .map(transaction => transaction.amount)
-    const total = transactionsAmounts
-        .reduce((accumulator, value) => accumulator + value, 0)
-        .toFixed(2)
+
     const income = transactionsAmounts
         .filter(value => value >= 0)
-        .reduce((accumulator, value) => accumulator + value, 0)
+        .reduce(sumAmounts, 0)
         .toFixed(2)
     const expense = Math.abs(transactionsAmounts
         .filter(value => value < 0)
-        .reduce((accumulator, value) => accumulator + value, 0))
+        .reduce(sumAmounts, 0))
         .toFixed(2)
+
+    const total = (income - expense).toFixed(2)
     
     balanceDisplay.textContent = `R$ ${ dotToComma(total) }`
     incomeDisplay.textContent = `R$ ${ dotToComma(income) }`
@@ -93,21 +95,8 @@ const updateLocalStorage = () => {
 
 const generateID = () => Math.round(Math.random() * 1000)
 
-/**
- * A arrow function passada so vai executar quando
- * o evento de submit do form acontecer
- */
-form.addEventListener('submit', event => {
-    event.preventDefault()//impedindo que o form seja enviado (isso atualizaria a pagina)
-    
-    const transactionName = inputTransactionName.value.trim()
-    const transactionAmount = inputTransactionAmount.value.trim()
 
-    if (transactionName === '' || transactionAmount === '') {
-        alert('Preencha o nome e o valor da transação!')
-        return
-    }
-
+const addToTransactionsArray = (transactionName, transactionAmount) => {
     const transaction = { 
         id: generateID(), 
         name: transactionName, 
@@ -115,9 +104,33 @@ form.addEventListener('submit', event => {
     }
 
     transactions.push(transaction)
-    init()
-    updateLocalStorage()
+}
 
+const clearInputs = () => {
     inputTransactionName.value = ''
     inputTransactionAmount.value = ''
-})
+}
+
+const handleFormSubmit = event => {
+    event.preventDefault()//impedindo que o form seja enviado (isso atualizaria a pagina)
+    
+    const transactionName = inputTransactionName.value.trim()
+    const transactionAmount = inputTransactionAmount.value.trim()
+    const isSomeInputEmpty = transactionName === '' || transactionAmount === ''
+    
+    if (isSomeInputEmpty) {
+        alert('Preencha o nome e o valor da transação!')
+        return
+    }
+
+    addToTransactionsArray(transactionName, transactionAmount)
+    init()
+    updateLocalStorage()
+    clearInputs()
+
+}
+/**
+ * A arrow function passada so vai executar quando
+ * o evento de submit do form acontecer
+ */
+form.addEventListener('submit', handleFormSubmit)
