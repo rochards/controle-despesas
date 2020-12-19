@@ -5,7 +5,7 @@ Treinando a construção de aplicações com JavaScript by [Roger Melo](https://
 A aplicação foi desenvolvida utilizando as seguintes tecnologias:
 
 - HTML5;
-- CSS;
+- CSS3;
 - JavaScript.
 
-Foi utilizada o Local Storage do browser para persistir os dados.
+Foi utilizado o Local Storage do browser para persistir os dados.
